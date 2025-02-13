@@ -4,10 +4,9 @@ using API.Models.Film;
 
 namespace API.Interfaces;
 
-public interface IFilmStudio
+public interface IFilmStudio : IUser
 {
-    int Id { get; set; }
-    string FilmStudioName { get; set; }
+    string FilmStudioId { get; }
+    string Name { get; set; }
     string City { get; set; }
-    List<FilmCopy> RentedFilmCopies { get; set; }
 }

@@ -25,16 +25,6 @@ public class FilmRepository : IFilmRepository
         _context.Films.Add(film);
     }
 
-    public async Task Delete(int id)//anvands inte just nu
-    {
-        var film = await _context.Films.FindAsync(id);
-        if (film != null)
-        {
-            _context.Films.Remove(film);
-            await _context.SaveChangesAsync();
-        }
-    }
-
     public async Task<IEnumerable<FilmDTO>> GetAllFilms()
     {
         var films = await _context.Films.ToListAsync();
@@ -43,7 +33,7 @@ public class FilmRepository : IFilmRepository
 
     public async Task<IEnumerable<FilmWithCopiesDTO>> GetAllFilmsWithCopies()
     {
-        var films = await _context.Films.ToListAsync();
+        var films = await _context.Films.Include(f => f.FilmCopies).ToListAsync();
         return _mapper.Map<IEnumerable<FilmWithCopiesDTO>>(films);
     }
 
@@ -55,7 +45,7 @@ public class FilmRepository : IFilmRepository
 
     public async Task<FilmWithCopiesDTO?> GetFilmWithCopiesById(int id)
     {
-        var film = await _context.Films.FindAsync(id);
+        var film = await _context.Films.Include(f => f.FilmCopies).FirstOrDefaultAsync(f => f.Id == id);
         return film == null ? null : _mapper.Map<FilmWithCopiesDTO>(film);
     }
 
@@ -81,7 +71,6 @@ public class FilmRepository : IFilmRepository
             {
                 var copiesToRemove = currentFilmCopiesCount - newFilmCopiesCount;
                 await _filmCopy.RemoveFilmCopy(film, copiesToRemove);
-
             }
         }
 

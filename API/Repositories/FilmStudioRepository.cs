@@ -30,34 +30,37 @@ public class FilmStudioRepository : IFilmStudioRepository
         var filmStudios = await _context.FilmStudios.Include(s => s.RentedFilmCopies).ToListAsync();
         return _mapper.Map<IEnumerable<FilmStudioMinimalDTO>>(filmStudios);
     }
-
-    public async Task<FilmStudioDTO?> GetFullFilmStudioById(int id)
+    
+    public async Task<FilmStudioDTO?> GetFullFilmStudioById(string id)
     {
-        var filmStudio = await _context.FilmStudios.Include(s => s.RentedFilmCopies).FirstOrDefaultAsync(s => s.Id == id);
+        var filmStudio = await _context.FilmStudios.Include(s => s.RentedFilmCopies).ThenInclude(fc => fc.Film).FirstOrDefaultAsync(s => s.Id == id);
         return filmStudio == null ? null : _mapper.Map<FilmStudioDTO>(filmStudio);
     }
 
-    public async Task<FilmStudioMinimalDTO?> GetMiniFilmStudioById(int id)
+    public async Task<FilmStudioMinimalDTO?> GetMiniFilmStudioById(string id)
     {
         var filmStudio = await _context.FilmStudios.Include(s => s.RentedFilmCopies).FirstOrDefaultAsync(s => s.Id == id);
         return filmStudio == null ? null : _mapper.Map<FilmStudioMinimalDTO>(filmStudio);
     }
 
-    public async Task<IEnumerable<FilmCopyDTO>> GetRentedFilmsForFilmStudio(int id)
+    public async Task<IEnumerable<FilmCopyDTO>> GetRentedFilmsForFilmStudio(string id)
     {
-        return await _context.FilmCopies
-        .Where(fc => fc.FilmStudioId == id && fc.IsRented == true)
-        .Select(fc => new FilmCopyDTO
-        {
-            Id = fc.Id
-        })
-        .ToListAsync();
+        var filmcopies = await _context.FilmCopies
+        .Where(fc => fc.FilmStudioId == id && fc.IsRented == true).ToListAsync();
+        return _mapper.Map<IEnumerable<FilmCopyDTO>>(filmcopies);
     }
 
     public async Task<bool> RentFilm(FilmStudioDTO studio, FilmCopyDTO filmCopy)
     {
-        filmCopy.IsRented = true;
-        studio.RentedFilmCopies?.Add(_mapper.Map<FilmCopy>(filmCopy));
+        var filmCopyInDb = await _context.FilmCopies.FindAsync(filmCopy.Id);
+        var filmStudioInDb = await _context.FilmStudios.FindAsync(studio.FilmStudioId);
+        if (filmCopyInDb == null || filmStudioInDb == null)
+        {
+            return false;
+        }
+        filmCopyInDb.IsRented = true;
+        filmCopyInDb.TimeWhenRented = DateTime.UtcNow;
+        filmStudioInDb.RentedFilmCopies?.Add(filmCopyInDb);
 
         await _context.SaveChangesAsync();
         return true;
@@ -65,12 +68,18 @@ public class FilmStudioRepository : IFilmStudioRepository
 
     public async Task<bool> ReturnFilm(FilmStudioDTO studio, FilmCopyDTO rentedFilmCopy)
     {
-        rentedFilmCopy.IsRented = false;
-        studio.RentedFilmCopies?.Remove(_mapper.Map<FilmCopy>(rentedFilmCopy));
+        var filmCopyInDb = await _context.FilmCopies.FindAsync(rentedFilmCopy.Id);
+        var filmStudioInDb = await _context.FilmStudios.Include(fs => fs.RentedFilmCopies).FirstOrDefaultAsync(fs => fs.Id == studio.FilmStudioId);
+        if (filmCopyInDb == null || filmStudioInDb == null)
+        {
+            return false;
+        }
+        filmCopyInDb.IsRented = false;
+        filmCopyInDb.TimeWhenRented = null;
+        filmCopyInDb.FilmStudioId = string.Empty;//removes connection to filmstudio
 
         await _context.SaveChangesAsync();
         return true;
-
     }
 
 }

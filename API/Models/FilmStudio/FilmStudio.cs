@@ -1,17 +1,19 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using API.Interfaces;
 using API.Models.Film;
 using Microsoft.AspNetCore.Identity;
 
 namespace API.Models;
 
-public class FilmStudio:IdentityUser, IFilmStudio
+public class FilmStudio : ApplicationUser, IFilmStudio
 {
-
-    public int Id { get; set; }
-    public required string FilmStudioName { get; set; }
+    [NotMapped]
+    public string FilmStudioId => Id;
+    public required string Name { get; set; }
     public required string City { get; set; }
+    public new string Role { get; set; } = "filmstudio";
 
     //one studio can have many moviecopies
-    public List<FilmCopy> RentedFilmCopies { get; set; }= new List<FilmCopy>();
+    public List<FilmCopy> RentedFilmCopies { get; set; } = new List<FilmCopy>();
 }

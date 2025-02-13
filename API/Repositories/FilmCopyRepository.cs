@@ -18,11 +18,9 @@ public class FilmCopyRepository : IFilmCopyRepository
         var newCopies = new List<FilmCopy>();
         for (int i = 0; i < copiesToAdd; i++)
         {
-            newCopies.Add(new FilmCopy { FilmId = film.Id, Film = film });
-
+            newCopies.Add(new FilmCopy { FilmId = film.Id, Film = film, FilmStudioId = "" });
         }
-            await _context.FilmCopies.AddRangeAsync(newCopies);
-            film.FilmCopies.AddRange(newCopies);
+        await _context.FilmCopies.AddRangeAsync(newCopies);
     }
 
     public async Task RemoveFilmCopy(Film film, int copiesToRemove)
@@ -31,7 +29,7 @@ public class FilmCopyRepository : IFilmCopyRepository
         var rentedCopies = film.FilmCopies.Where(fc => fc.IsRented).OrderBy(fc => fc.TimeWhenRented).ToList();
 
         int removedCount = 0;
-        //ta bort forst de som inte ar utlanade
+        //remove mot rented movies first
         while (availableCopies.Count > 0 && removedCount < copiesToRemove)
         {
             var copyToRemove = availableCopies.First();
@@ -40,12 +38,12 @@ public class FilmCopyRepository : IFilmCopyRepository
             removedCount++;
         }
         var studios = await _context.FilmStudios.Where(s => s.RentedFilmCopies.Any()).ToListAsync();
-        //ta bort de som ar forst utlanade och forstatt sa lange de behovs
+        //remove movies that are rented first 
         while (rentedCopies.Count > 0 && removedCount < copiesToRemove)
         {
             var copyToRemove = rentedCopies.First();
 
-            // Hitta studio som hyrde filmen
+            // Find the studio that rents movie and remove connection
             var studio = studios.FirstOrDefault(s => s.RentedFilmCopies.Contains(copyToRemove));
             if (studio != null)
             {
@@ -55,7 +53,6 @@ public class FilmCopyRepository : IFilmCopyRepository
             rentedCopies.Remove(copyToRemove);
             removedCount++;
         }
-
     }
 }
 

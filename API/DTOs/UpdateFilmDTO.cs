@@ -9,5 +9,4 @@ public class UpdateFilmDTO
     public string? Genre { get; set; }
     public int? ReleaseYear { get; set; }
     public int? NumberOfCopies { get; set; }
-    //public List<FilmCopyDTO>? FilmCopies { get; set; }
 }
