@@ -10,7 +10,6 @@ public interface IFilmRepository
     Task<FilmDTO?> GetFilmById(int id);
     void AddNewFilm(Film film);
     Task<Film?> Update(int id, UpdateFilmDTO updateDto);
-    Task Delete(int id);
     Task<IEnumerable<FilmWithCopiesDTO>> GetAllFilmsWithCopies();
     Task<FilmWithCopiesDTO?> GetFilmWithCopiesById(int id);
 }

@@ -9,7 +9,6 @@ obj/
 *.db
 *.idea/
 *.vscode/
-**/appsettings*.json
 **/appsettings*.Development.json
 
 # NuGet

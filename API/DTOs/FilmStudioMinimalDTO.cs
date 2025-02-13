@@ -5,7 +5,7 @@ namespace API.DTOs;
 
 public class FilmStudioMinimalDTO
 {
-    public int Id { get; set; }
-    public  required string  FilmStudioName { get; set; }
+    public required string FilmStudioId { get; set; }
+    public required string FilmStudioName { get; set; }
 
 }
