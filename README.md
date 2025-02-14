@@ -1,6 +1,8 @@
 # Filmstudio
 Detta skolprojekt är en webbapplikation för filmföreningar anslutna till Sveriges Förenade Filmstudios (SFF), där filmstudios kan låna filmer via ett API och ett klientgränssnitt. Projektet inkluderar både ett API för att hantera filmer och filmstudios samt ett frontendgränssnitt som är enbart för filmstudios.
 
+[Ladda ner PDF](docs/reflections.pdf)
+
 ## För att testa funktionalitet 
 - På frontend behöver du först registrera dig som filmstudio och sedan logga in.
 - I test.rest filen behöver du registrera dig som admin eller filmstudio. När du autentiserar dig kommer du att få en token som du ska byta ut i variabeln högst upp i filen. En filmstudio får även ett id, vilket också ska användas i variabeln filmStudioId.
