@@ -16,31 +16,31 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Film> Films { get; set; }
     public DbSet<FilmStudio> FilmStudios { get; set; }
     public DbSet<FilmCopy> FilmCopies { get; set; }
-   // public DbSet<ApplicationUser> Users { get; set; } 
+    // public DbSet<ApplicationUser> Users { get; set; } 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
         builder.Entity<Film>().HasData(
-           new Film { Id = 1, Title = "The Shawshank Redemption", Director = "Frank Darabont", ReleaseYear = 1994, Genre = "Drama", ImageUrl = "https://image.tmdb.org/t/p/w500/hKgi2D4tD1ckmZb3fjVdpz0ETht.jpg" },
-           new Film { Id = 2, Title = "The Godfather", Director = "Francis Ford Coppola", ReleaseYear = 1972, Genre = "Crime, Drama", ImageUrl = "https://image.tmdb.org/t/p/w500/8jPVjG1oWiHvCxyRzx53ijH9yo6.jpg" },
-           new Film { Id = 3, Title = "The Dark Knight", Director = "Christopher Nolan", ReleaseYear = 2008, Genre = "Action, Crime, Drama", ImageUrl = "https://image.tmdb.org/t/p/w500/rID0ZGzRp9hzjOKnKYxlgDa7kH2.jpg" },
-           new Film { Id = 4, Title = "Schindler's List", Director = "Steven Spielberg", ReleaseYear = 1993, Genre = "Biography, Drama, History", ImageUrl = "https://image.tmdb.org/t/p/w500/owXv9e1LnsEpwnoT5cSyeC8Y8Nl.jpg" },
-           new Film { Id = 5, Title = "The Lord of the Rings: The Return of the King", Director = "Peter Jackson", ReleaseYear = 2003, Genre = "Adventure, Drama", ImageUrl = "https://image.tmdb.org/t/p/w500/xQMY70L1v0xCZ1y2OpRJw2bU5WR.jpg" },
-           new Film { Id = 6, Title = "Pulp Fiction", Director = "Quentin Tarantino", ReleaseYear = 1994, Genre = "Crime, Drama", ImageUrl = "https://image.tmdb.org/t/p/w500/zdxbyX27Mcj6iP0wmeCEEqjoB5V.jpg" },
-           new Film { Id = 7, Title = "The Lord of the Rings: The Fellowship of the Ring", Director = "Peter Jackson", ReleaseYear = 2001, Genre = "Action, Adventure, Drama", ImageUrl = "https://image.tmdb.org/t/p/w500/n81VwAJeq8qqNkABvke4XJlnvcI.jpg" },
-           new Film { Id = 8, Title = "The Empire Strikes Back", Director = "Irvin Kershner", ReleaseYear = 1980, Genre = "Action, Adventure, Fantasy", ImageUrl = "https://image.tmdb.org/t/p/w500/qx3a5ANH1ADa57IhAbylzqXbgp6.jpg" },
-           new Film { Id = 9, Title = "Forrest Gump", Director = "Robert Zemeckis", ReleaseYear = 1994, Genre = "Drama, Romance", ImageUrl = "https://image.tmdb.org/t/p/w500/tLxfqRfksfVYZh9y1d65qa0lKHd.jpg" },
-           new Film { Id = 10, Title = "Inception", Director = "Christopher Nolan", ReleaseYear = 2010, Genre = "Action, Adventure, Sci-Fi", ImageUrl = "https://image.tmdb.org/t/p/w500/cnQzzqZ70hy5uAnRzKtd1jUjL7M.jpg" },
-           new Film { Id = 11, Title = "The Matrix", Director = "Lana Wachowski, Lilly Wachowski", ReleaseYear = 1999, Genre = "Action, Sci-Fi", ImageUrl = "https://image.tmdb.org/t/p/w500/64ZMQJh3ciL46fdvDXhctI2Jdfx.jpg" },
-           new Film { Id = 12, Title = "Goodfellas", Director = "Martin Scorsese", ReleaseYear = 1990, Genre = "Crime, Drama", ImageUrl = "https://image.tmdb.org/t/p/w500/dpAvE9HzfgGnF7b0aOSm0Z0XsJd.jpg" },
-           new Film { Id = 13, Title = "Fight Club", Director = "David Fincher", ReleaseYear = 1999, Genre = "Drama", ImageUrl = "https://image.tmdb.org/t/p/w500/nlmpZ4gNch0kIMaZjO9ReIVUlcQ.jpg" },
-           new Film { Id = 14, Title = "Forrest Gump", Director = "Robert Zemeckis", ReleaseYear = 1994, Genre = "Drama, Romance", ImageUrl = "https://image.tmdb.org/t/p/w500/tLxfqRfksfVYZh9y1d65qa0lKHd.jpg" },
-           new Film { Id = 15, Title = "The Lion King", Director = "Roger Allers, Rob Minkoff", ReleaseYear = 1994, Genre = "Animation, Adventure, Drama", ImageUrl = "https://image.tmdb.org/t/p/w500/hLbd6d3AXXy94WGmhO8H2hf9Gn6.jpg" },
-           new Film { Id = 16, Title = "Star Wars: A New Hope", Director = "George Lucas", ReleaseYear = 1977, Genre = "Action, Adventure, Fantasy", ImageUrl = "https://image.tmdb.org/t/p/w500/qx3a5ANH1ADa57IhAbylzqXbgp6.jpg" },
-           new Film { Id = 17, Title = "The Godfather: Part II", Director = "Francis Ford Coppola", ReleaseYear = 1974, Genre = "Crime, Drama", ImageUrl = "https://image.tmdb.org/t/p/w500/dsHTqs7pz79uZGmbjGpR11v5Jci.jpg" },
-           new Film { Id = 18, Title = "The Dark Knight Rises", Director = "Christopher Nolan", ReleaseYear = 2012, Genre = "Action, Drama", ImageUrl = "https://image.tmdb.org/t/p/w500/ud6gw9n4YWg0Z9tSTn8s6cThQlh.jpg" },
-           new Film { Id = 19, Title = "Se7en", Director = "David Fincher", ReleaseYear = 1995, Genre = "Crime, Drama, Mystery", ImageUrl = "https://image.tmdb.org/t/p/w500/tEyMmfLBb6m1t0xjIShlcbRvf3G.jpg" },
-           new Film { Id = 20, Title = "The Silence of the Lambs", Director = "Jonathan Demme", ReleaseYear = 1991, Genre = "Crime, Drama, Thriller", ImageUrl = "https://image.tmdb.org/t/p/w500/xCk4Vuqtr0PrrtfJXYfUjaDxBQt.jpg" }
+           new Film { Id = 1, Title = "The Shawshank Redemption", Director = "Frank Darabont", ReleaseYear = 1994, Genre = "Drama" },
+           new Film { Id = 2, Title = "The Godfather", Director = "Francis Ford Coppola", ReleaseYear = 1972, Genre = "Crime, Drama" },
+           new Film { Id = 3, Title = "The Dark Knight", Director = "Christopher Nolan", ReleaseYear = 2008, Genre = "Action, Crime, Drama" },
+           new Film { Id = 4, Title = "Schindler's List", Director = "Steven Spielberg", ReleaseYear = 1993, Genre = "Biography, Drama, History" },
+           new Film { Id = 5, Title = "The Lord of the Rings: The Return of the King", Director = "Peter Jackson", ReleaseYear = 2003, Genre = "Adventure, Drama" },
+           new Film { Id = 6, Title = "Pulp Fiction", Director = "Quentin Tarantino", ReleaseYear = 1994, Genre = "Crime, Drama" },
+           new Film { Id = 7, Title = "The Lord of the Rings: The Fellowship of the Ring", Director = "Peter Jackson", ReleaseYear = 2001, Genre = "Action, Adventure, Drama" },
+           new Film { Id = 8, Title = "The Empire Strikes Back", Director = "Irvin Kershner", ReleaseYear = 1980, Genre = "Action, Adventure, Fantasy" },
+           new Film { Id = 9, Title = "Forrest Gump", Director = "Robert Zemeckis", ReleaseYear = 1994, Genre = "Drama, Romance" },
+           new Film { Id = 10, Title = "Inception", Director = "Christopher Nolan", ReleaseYear = 2010, Genre = "Action, Adventure, Sci-Fi" },
+           new Film { Id = 11, Title = "The Matrix", Director = "Lana Wachowski, Lilly Wachowski", ReleaseYear = 1999, Genre = "Action, Sci-Fi" },
+           new Film { Id = 12, Title = "Goodfellas", Director = "Martin Scorsese", ReleaseYear = 1990, Genre = "Crime, Drama" },
+           new Film { Id = 13, Title = "Fight Club", Director = "David Fincher", ReleaseYear = 1999, Genre = "Drama" },
+           new Film { Id = 14, Title = "Forrest Gump", Director = "Robert Zemeckis", ReleaseYear = 1994, Genre = "Drama, Romance" },
+           new Film { Id = 15, Title = "The Lion King", Director = "Roger Allers, Rob Minkoff", ReleaseYear = 1994, Genre = "Animation, Adventure, Drama" },
+           new Film { Id = 16, Title = "Star Wars: A New Hope", Director = "George Lucas", ReleaseYear = 1977, Genre = "Action, Adventure, Fantasy" },
+           new Film { Id = 17, Title = "The Godfather: Part II", Director = "Francis Ford Coppola", ReleaseYear = 1974, Genre = "Crime, Drama" },
+           new Film { Id = 18, Title = "The Dark Knight Rises", Director = "Christopher Nolan", ReleaseYear = 2012, Genre = "Action, Drama" },
+           new Film { Id = 19, Title = "Se7en", Director = "David Fincher", ReleaseYear = 1995, Genre = "Crime, Drama, Mystery" },
+           new Film { Id = 20, Title = "The Silence of the Lambs", Director = "Jonathan Demme", ReleaseYear = 1991, Genre = "Crime, Drama, Thriller" }
        );
         // Lägg till filmstudios
         builder.Entity<FilmStudio>().HasData(

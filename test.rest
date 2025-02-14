@@ -1,6 +1,9 @@
 @hostname = localhost
 @port = 5001
 @host = {{hostname}}:{{port}}
+@admintoken= eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImU5YTY0ODdmLTczY2QtNDBjNS05MzkzLWQ3ZWY4NDRhMWEyZiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJUZXN0QWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsImV4cCI6MTczOTUzODkzNSwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NTAwMSIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEifQ.MM3QzC4AxX3pgIv3bT5i2bciqcrPUjHxfFzohNJ4Uvw
+@filmstudiotoken= eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjdjNWNiZmJjLThlYzYtNGM1MS1iOWIwLWQ1ZDUxNmI4MzdjMyIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJUZXN0IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiZmlsbXN0dWRpbyIsImV4cCI6MTczOTU0NDUzNiwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NTAwMSIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEifQ.Y_wSgFPeNN-3rs6JQs6xOnlZOiEY_Qyuth-aR9UWnv0
+@filmstudioid= 7c5cbfbc-8ec6-4c51-b9b0-d5d516b837c3
 ###
 
 //SKAPA USER-ADMIN
@@ -8,7 +11,7 @@ POST http://{{host}}/api/users/register
 Content-Type: application/json
 
 {
-  "username": "Test",
+  "username": "TestAdmin",
   "password": "Test123!",
   "isAdmin": true
 }
@@ -20,7 +23,7 @@ POST http://{{host}}/api/filmstudio/register
 Content-Type: application/json
 
 {
-  "username": "Test2",
+  "username": "Test",
   "filmStudioName":"Test Studio",
   "city":"Stockholm",
   "password": "Test123!"
@@ -41,50 +44,11 @@ Content-Type: application/json
 
 //LÄGG TILL NY FILM ENDAST FÖR AUTENTISERAD ADMIN ANNARS 403 FORBIDDEN
 POST http://{{host}}/api/films
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImYyM2Y5NmU2LTNhMTktNGViNS1iYTMzLWQxYzZjMWJkNGUzZSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJUZXN0IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW4iLCJleHAiOjE3MzkzOTc1MTQsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.kB6VGN3O3uFuV7BpAq8WKweZh1LmiTQpv6cDXFBo_4w
+Authorization: Bearer {{admintoken}}
 Content-Type: application/json
 
 {
-    "title":"Gone with the wind ",
-    "director":"Director Test",
-    "releaseYear":1999,
-    "genre":"Romantik",
-    "numberOfCopies":4
-}
-
-###
-
-//HÄMTA ALLA FILMSTUDIOS--Ett lyckat anrop med en oautentiserad användare eller en autentiserad filmstudio ska ge tillbaka ett json-objekt som INTE innehåller listan RentedFilmCopies eller egenskapen City.
-GET http://{{host}}/api/filmstudios
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6Ijg4NGQ1NmI4LWZhNWUtNDhlMC05NGNmLTgzOTEyMGIwNGRmYSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJUZXN0MyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6ImZpbG1zdHVkaW8iLCJleHAiOjE3MzkzODQ4NzMsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.3j11HlUTFdhHoyGt8bc1zf2Sn9W3DG82-kXImuKtLo8
-
-###
-
-//HÄMTA EN SPECIFIK FILMSTUDIO--Ett lyckat anrop med en oautentiserad användare eller en autentiserad filmstudio men som inte är filmstudion som eftersöks ska ge tillbaka ett json-objekt som NTE innehåller listan RentedFilmCopies eller egenskapen City. Om admin eller en autentiserad filmstudio med samma id som eftersöks ska returnera full objekt.
-GET http://{{host}}/api/filmstudio/27df545f-a9f8-4376-9a20-e8cddd6535e2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjI3ZGY1NDVmLWE5ZjgtNDM3Ni05YTIwLWU4Y2RkZDY1MzVlMiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJUZXN0MiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6ImZpbG1zdHVkaW8iLCJleHAiOjE3MzkzOTczODcsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.PPFK_0pS9X8lINqm01Jmo_Fn9JK-MUrja2W6WMWvBuE
-
-###
-
-//HÄMTA ALLA FILMER-- autentiserad användare (filmstudio eller admin) ska få tillbaka en array med objekt som uppfyller interface:et IFilm, annars returneras samma men utan egenskapen "FilmCopies"
-GET http://{{host}}/api/films
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImNjZjYzZmMxLTcwNWQtNGM0OC04MDU5LWY2NThjNTgzMjBlNCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJUZXN0MSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6ImZpbG1zdHVkaW8iLCJleHAiOjE3MzkzODY2MDYsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.UZ4qcFPI6XMT38dO0OIqBXd9q5UwAG1npcNgDiDFzCo
-
-###
-
-//HÄMTA EN SPECIFIK FILM-- autentiserad användare (filmstudio eller admin) ska få tillbaka objekt som uppfyller interface:et IFilm, annars returneras samma men utan egenskapen "FilmCopies"
-GET http://{{host}}/api/films/11
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImY2OGI4NzcwLTI1YWItNDcyZi1hNDM0LWE2NzY3NWI0MzQ1NiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJUZXN0IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW4iLCJleHAiOjE3MzkzOTU5OTksImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.lKyXyoJVKlCBS9oT1NAiVZdGchSLkZg4qpIpIFAn46c
-
-###
-
-//ÄNDRA INFORMATIONEN OM EN FILM-- en autentiserad admin ska få det uppdaterade objektet som är ett json-objekt som uppfyller interface:et IFilm. Ett anrop av en icke-autentiserad användare ska ge statuskod 401.
-PATCH http://{{host}}/api/films/9
-Authorization: Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImQ5YzAxMTE1LWY4OTktNGEyMi1hOGU0LTEzOTM2YzhhZWZhOSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJUZXN0IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW4iLCJleHAiOjE3MzkzOTE3NzcsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.zmYRM2HW9T6I5ydtzt6U-yBR5fKJcHoo5U9X6XRY8Dk
-Content-Type: application/json
-
-{
-    "title":"Gone with the wind",
+     "title":"Gone with the wind",
     "director":"Victor Fleming",
     "releaseYear":1939,
     "genre":"Romantik",
@@ -93,18 +57,57 @@ Content-Type: application/json
 
 ###
 
+//HÄMTA ALLA FILMSTUDIOS--Ett lyckat anrop med en oautentiserad användare eller en autentiserad filmstudio ska ge tillbaka ett json-objekt som INTE innehåller listan RentedFilmCopies eller egenskapen City.
+GET http://{{host}}/api/filmstudios
+Authorization: Bearer {{admintoken}}
+
+###
+
+//HÄMTA EN SPECIFIK FILMSTUDIO--Ett lyckat anrop med en oautentiserad användare eller en autentiserad filmstudio men som inte är filmstudion som eftersöks ska ge tillbaka ett json-objekt som NTE innehåller listan RentedFilmCopies eller egenskapen City. Om admin eller en autentiserad filmstudio med samma id som eftersöks ska returnera full objekt.
+GET http://{{host}}/api/filmstudio/{{filmstudioid}}
+Authorization: Bearer {{filmstudiotoken}}
+
+###
+
+//HÄMTA ALLA FILMER-- autentiserad användare (filmstudio eller admin) ska få tillbaka en array med objekt som uppfyller interface:et IFilm, annars returneras samma men utan egenskapen "FilmCopies"
+GET http://{{host}}/api/films
+Authorization: Bearer {{filmstudiotoken}}
+
+###
+
+//HÄMTA EN SPECIFIK FILM-- autentiserad användare (filmstudio eller admin) ska få tillbaka objekt som uppfyller interface:et IFilm, annars returneras samma men utan egenskapen "FilmCopies"
+GET http://{{host}}/api/films/1
+Authorization: Bearer {{filmstudiotoken}}
+
+###
+
+//ÄNDRA INFORMATIONEN OM EN FILM-- en autentiserad admin ska få det uppdaterade objektet som är ett json-objekt som uppfyller interface:et IFilm. Ett anrop av en icke-autentiserad användare ska ge statuskod 401.
+PATCH http://{{host}}/api/films/20
+Authorization: Bearer {{admintoken}}
+Content-Type: application/json
+
+{
+    "title":"The Silence of the Lambs",
+    "director":"Victor Fleming",
+    "releaseYear":1939,
+    "genre":"Romantik",
+    "numberOfCopies":0
+}
+
+###
+
 //LÅNA ETT EXEMPLAR AV EN FILM-- Endast för autentiserad filmstudio annars 401, om filmen redan är lånad av samma studio 403, om filmen eller ledig exemplar inte finns 409
-POST http://{{host}}/api/films/rent?id=18&studioid=27df545f-a9f8-4376-9a20-e8cddd6535e2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjI3ZGY1NDVmLWE5ZjgtNDM3Ni05YTIwLWU4Y2RkZDY1MzVlMiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJUZXN0MiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6ImZpbG1zdHVkaW8iLCJleHAiOjE3MzkzOTczODcsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.PPFK_0pS9X8lINqm01Jmo_Fn9JK-MUrja2W6WMWvBuE
+POST http://{{host}}/api/films/rent?id=18&studioid={{filmstudioid}}
+Authorization: Bearer {{filmstudiotoken}}
 
 ###
 
 //LÄMNA TILLBAKA ETT LÅNAT EXEMPLAR AV EN FILM-- Endast för autentiserad filmstudio annars 401, om filmen inte finns 409
-POST http://{{host}}/api/films/return?id=1&studioid=27df545f-a9f8-4376-9a20-e8cddd6535e2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjI3ZGY1NDVmLWE5ZjgtNDM3Ni05YTIwLWU4Y2RkZDY1MzVlMiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJUZXN0MiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6ImZpbG1zdHVkaW8iLCJleHAiOjE3MzkzOTczODcsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.PPFK_0pS9X8lINqm01Jmo_Fn9JK-MUrja2W6WMWvBuE
+POST http://{{host}}/api/films/return?id=4&studioid={{filmstudioid}}
+Authorization: Bearer {{filmstudiotoken}}
 
 ###
 
-//HÄMTA DE LÅNADE FILMER FÖR DEN AUTENTISERADE STUDION++ ska fåtillbaka en array med objekt som motsvarar IFilmCopy, om ej autentiserad 401
+//HÄMTA DE LÅNADE FILMER FÖR DEN AUTENTISERADE STUDION-- ska fåtillbaka en array med objekt som motsvarar IFilmCopy, om ej autentiserad 401
 GET http://{{host}}/api/mystudio/rentals
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjI3ZGY1NDVmLWE5ZjgtNDM3Ni05YTIwLWU4Y2RkZDY1MzVlMiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJUZXN0MiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6ImZpbG1zdHVkaW8iLCJleHAiOjE3MzkzOTczODcsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.PPFK_0pS9X8lINqm01Jmo_Fn9JK-MUrja2W6WMWvBuE
+Authorization: Bearer {{filmstudiotoken}}
