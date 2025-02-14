@@ -46,7 +46,7 @@ public class FilmStudioRepository : IFilmStudioRepository
     public async Task<IEnumerable<FilmCopyDTO>> GetRentedFilmsForFilmStudio(string id)
     {
         var filmcopies = await _context.FilmCopies
-        .Where(fc => fc.FilmStudioId == id && fc.IsRented == true).ToListAsync();
+        .Where(fc => fc.FilmStudioId == id && fc.IsRented == true).Include(fc=>fc.Film).ToListAsync();
         return _mapper.Map<IEnumerable<FilmCopyDTO>>(filmcopies);
     }
 

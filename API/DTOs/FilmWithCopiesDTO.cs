@@ -9,6 +9,6 @@ public class FilmWithCopiesDTO
     public string Director { get; set; } = string.Empty;
     public int ReleaseYear { get; set; }
     public string Genre { get; set; } = string.Empty;
-    public string ImageUrl { get; set; } = "http://localhost:5001/images/placeholder.png";
+    public string ImageUrl { get; set; } = "http://localhost:5001/images/placeholder.jpg";
     public List<FilmCopyDTO>? FilmCopies { get; set; }
 }

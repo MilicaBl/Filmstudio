@@ -91,7 +91,7 @@ namespace API.Controllers
             return Ok(new List<FilmStudioMinimalDTO> { minimalStudioDTO });
         }
 
-        [Authorize(Roles = "FilmStudio")]
+        [Authorize(Roles = "filmstudio")]
         [HttpGet("/api/mystudio/rentals")]
         public async Task<IActionResult> GetRentedFilmsForFilmStudio()
         {

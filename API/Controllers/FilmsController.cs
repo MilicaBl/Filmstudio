@@ -39,7 +39,6 @@ namespace API.Controllers
             else
             {
                 var films = await _film.GetAllFilms();
-                Console.WriteLine($"Filmer: {films}");
                 return Ok(films);
             }
         }

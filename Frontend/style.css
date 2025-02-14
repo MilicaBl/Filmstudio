@@ -1,0 +1,104 @@
+body {
+  background-color: rgb(5, 6, 6);
+}
+header {
+  display: flex;
+  margin: 0 50px;
+  align-items: center;
+  justify-content: space-between;
+}
+main {
+  margin: 0 50px;
+}
+#content {
+  display: flex;
+  align-items: center;
+}
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 0px;
+}
+li {
+  list-style: none;
+  background-color: rgb(5, 6, 6);
+  border: 1px solid rgb(102, 98, 75);
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  padding-bottom: 20px;
+  color: rgb(243, 243, 232);
+  gap: 5px;
+}
+li img {
+  width: 200px;
+}
+h1 {
+  text-transform: uppercase;
+  color: rgb(243, 243, 232);
+  flex-grow: 1;
+  font-size: 1.5rem;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 40px;
+}
+.form p {
+  text-align: left;
+  width: 100%;
+  font-size: 1.2rem;
+  color: rgb(243, 243, 232);
+}
+.form input {
+  width: 100%;
+  padding: 10px;
+}
+button {
+  cursor: pointer;
+  padding: 3px 0px;
+}
+.form button {
+  padding: 6px;
+  width: 60%;
+  background-color: cadetblue;
+  border: 1px solid cadetblue;
+  color: rgb(243, 243, 232);
+}
+#nav button {
+  background-color: cadetblue;
+  border: 1px solid cadetblue;
+  color: rgb(243, 243, 232);
+  width: 150px;
+  margin-left: 20px;
+}
+.rentBtn,
+.returnMovieBtn,
+.returnBtn {
+  width: 80%;
+  color: rgb(5, 6, 6);
+  background-color: rgb(243, 243, 232);
+  border: 1px solid rgb(243, 243, 232);
+}
+.returnMovieBtn {
+  color: rgb(243, 243, 232);
+  background-color: cadetblue;
+  border: 1px solid cadetblue;
+}
+.closeFormsBtn {
+  position: fixed;
+  right: 20px;
+  top: 100px;
+  color: rgb(5, 6, 6);
+  background-color: rgb(243, 243, 232);
+  border: 1px solid rgb(243, 243, 232);
+  width: 100px;
+}
