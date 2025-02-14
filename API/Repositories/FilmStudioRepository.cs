@@ -27,7 +27,7 @@ public class FilmStudioRepository : IFilmStudioRepository
 
     public async Task<IEnumerable<FilmStudioMinimalDTO>> GetAllMiniFilmStudios()
     {
-        var filmStudios = await _context.FilmStudios.Include(s => s.RentedFilmCopies).ToListAsync();
+        var filmStudios = await _context.FilmStudios.ToListAsync();
         return _mapper.Map<IEnumerable<FilmStudioMinimalDTO>>(filmStudios);
     }
     
